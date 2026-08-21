@@ -1,7 +1,7 @@
 # MiniMarkdown Development Rules
 
 - Treat `ARCHITECTURE.md` as the authoritative cross-language architecture and behavior contract.
-- Keep language-specific projects and source files under their root language directory (`csharp/`, `rust/`, and future equivalents).
+- Keep language-specific projects and source files under their root language directory (`csharp/`, `rust/`, `node/`, and future equivalents).
 - When shared behavior, output shape, CLI behavior, resource limits, security policy, or streaming architecture changes, update all maintained language implementations in the same change.
 - Update `ARCHITECTURE.md` whenever the shared contract or supported implementation set changes.
 - Add equivalent tests to every maintained language for shared behavior changes. Exact-output cases must produce byte-identical Markdown across languages.
@@ -10,7 +10,7 @@
 - Preserve both browser engines: C# must publish with .NET WebAssembly AOT, Rust must compile to WebAssembly, and compare mode must test byte-identical output.
 - For WebAssembly, browser UI, or Pages workflow changes, run `./scripts/Build-Web.ps1`. `-SkipAot` is only a local integration check; deployment must use AOT.
 - Keep language-specific APIs idiomatic, but do not allow them to change observable conversion or CLI behavior defined by `ARCHITECTURE.md`.
-- Keep all C# projects and source files under `csharp/` and all Rust projects and source files under `rust/`.
+- Keep all C# projects and source files under `csharp/`, all Rust projects and source files under `rust/`, and all JavaScript/TypeScript projects and source files under `node/`.
 - Use English for code, comments, documentation, errors, and tests.
 - Do not add third-party libraries or NuGet package dependencies. Use .NET BCL APIs only.
 - Keep the library compatible with .NET Standard 2.0 and .NET Framework 4.6.2.

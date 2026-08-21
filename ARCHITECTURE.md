@@ -6,6 +6,8 @@ This document is the repository-level contract for every MiniMarkdown implementa
 
 - `csharp/` contains the C# library, CLI, integration tests, and benchmarks.
 - `rust/` contains the Rust library, CLI, and integration tests.
+- `node/` contains the Node.js JavaScript runtime package, TypeScript source and declarations, CLI, and integration tests.
+- `skills/` contains installable Agent Skills discovered by skills.sh.
 - `web/` contains the shared static browser interface.
 - `scripts/Validate-All.ps1` is the required cross-language validation entry point.
 - `scripts/Build-Web.ps1` builds the C# AOT and Rust WebAssembly GitHub Pages artifact.
@@ -41,6 +43,8 @@ Every implementation MUST:
 - Reject external workbook relationships and package paths that escape the archive root.
 - Avoid formula evaluation, macros, external resource loading, and XML DTD/entity expansion.
 
+Node.js fulfills the native streaming contract with lazy ZIP entry reads, incremental XML parsing, Writable backpressure, a bounded temporary package for stream input, and disk-backed shared strings. Compiled JavaScript and generated TypeScript declarations are build artifacts; TypeScript under `node/src/` is authoritative.
+
 Default limits MUST remain behaviorally equivalent across implementations:
 
 | Limit | Default |
@@ -65,6 +69,8 @@ The GitHub Pages test site MUST expose both maintained implementations:
 - Workbook bytes MUST remain local to the browser. The static site MUST NOT upload workbook content.
 
 The Pages artifact is assembled only through `scripts/Build-Web.ps1`. GitHub Actions MUST call this script rather than duplicating build behavior in workflow YAML.
+
+The Node.js implementation is native-only because its bounded-memory contract depends on Node streams, random-access files, and temporary disk storage. It is not duplicated into the browser bundle.
 
 ## CLI contract
 
@@ -117,3 +123,9 @@ A new implementation is complete only when it:
 6. Produces byte-identical Markdown for shared exact-output cases.
 
 Behavior changes require updating this document and equivalent tests in every maintained language in the same change.
+
+## Agent Skill distribution
+
+The `minimarkdown-xlsx` skill under `skills/` is the skills.sh distribution surface. Its frontmatter name MUST match its directory name. Changes to supported implementations, CLI commands, or conversion policy MUST update the skill in the same change.
+
+skills.sh discovers skills from the public GitHub repository after an installation through the official CLI. `skills.sh.json` controls repository-page grouping only and MUST remain valid JSON.

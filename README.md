@@ -2,8 +2,9 @@
 
 [![Validate](https://github.com/shps951023/MiniMarkdown/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/shps951023/MiniMarkdown/actions/workflows/deploy-pages.yml)
 [![GitHub Pages](https://img.shields.io/badge/try-GitHub%20Pages-171817)](https://shps951023.github.io/MiniMarkdown/)
+[![skills.sh](https://skills.sh/b/shps951023/MiniMarkdown)](https://skills.sh/shps951023/MiniMarkdown)
 
-MiniMarkdown converts XLSX workbooks into deterministic GitHub-Flavored Markdown. The repository maintains matching C# and Rust implementations with exact-output tests, bounded native conversion, command-line tools, and a browser comparison lab compiled to WebAssembly.
+MiniMarkdown converts XLSX workbooks into deterministic GitHub-Flavored Markdown. The repository maintains matching C#, Rust, and Node.js implementations with exact-output tests, bounded native conversion, command-line tools, and a browser comparison lab compiled to WebAssembly.
 
 **[Try the C# AOT and Rust WebAssembly converters in your browser](https://shps951023.github.io/MiniMarkdown/)**
 
@@ -11,13 +12,13 @@ Files selected in the browser stay on the device. The demo sends no workbook dat
 
 ## Implementations
 
-| | C# | Rust |
-| --- | --- | --- |
-| Library | .NET Standard 2.0 / .NET Framework 4.6.2 | Rust crate |
-| CLI | .NET Framework 4.6.2 | Native binary |
-| Browser | .NET WebAssembly AOT | `wasm32-unknown-unknown` |
-| Native shared strings | Temporary-file backed | Temporary-file backed |
-| Exact output | CRLF UTF-8 Markdown | CRLF UTF-8 Markdown |
+| | C# | Rust | Node.js |
+| --- | --- | --- | --- |
+| Library | .NET Standard 2.0 / .NET Framework 4.6.2 | Rust crate | JavaScript + TypeScript declarations |
+| CLI | .NET Framework 4.6.2 | Native binary | Node.js 20+ |
+| Browser | .NET WebAssembly AOT | `wasm32-unknown-unknown` | Native only |
+| Native shared strings | Temporary-file backed | Temporary-file backed | Temporary-file backed |
+| Exact output | CRLF UTF-8 Markdown | CRLF UTF-8 Markdown | CRLF UTF-8 Markdown |
 
 Both implementations follow [ARCHITECTURE.md](ARCHITECTURE.md), the authoritative cross-language behavior and resource contract.
 
@@ -50,6 +51,14 @@ Rust:
 cargo run --manifest-path rust/Cargo.toml --release -- report.xlsx -o report.md
 ```
 
+Node.js:
+
+```powershell
+npm ci --prefix node
+npm run build --prefix node
+node node/dist/cli.js report.xlsx -o report.md
+```
+
 Both CLIs write to standard output when `-o` is omitted and accept `-` for standard input.
 
 ## Libraries
@@ -78,6 +87,15 @@ XlsxConverter::convert_seekable(
 )?;
 ```
 
+TypeScript / JavaScript:
+
+```typescript
+import { convertFile, convertStream } from "minimarkdown";
+
+await convertFile("report.xlsx", "report.md");
+await convertStream(input, output);
+```
+
 Caller-owned streams remain open. Native non-seekable input is copied to a bounded temporary file because XLSX entries must be revisited.
 
 ## Validation
@@ -104,6 +122,16 @@ The generated static site is written to `artifacts/site`. Use `./scripts/Build-W
 [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml) validates both native implementations, builds both browser engines, enables GitHub Pages, and deploys `artifacts/site` on pushes to `main` or manual dispatch. If repository or organization policy blocks automatic enablement, set **Pages > Build and deployment > Source** to **GitHub Actions** once.
 
 Azure resources and Azure CLI are not required for GitHub Pages. The site is fully static and runs conversion in the browser.
+
+## Agent Skill
+
+Install the MiniMarkdown XLSX conversion skill for GitHub Copilot, Claude Code, Cursor, Codex, and other compatible agents:
+
+```powershell
+npx skills add shps951023/MiniMarkdown
+```
+
+The skill is defined in [skills/minimarkdown-xlsx/SKILL.md](skills/minimarkdown-xlsx/SKILL.md). After the repository is public and this change is pushed, the first installation registers anonymous telemetry and makes the skill eligible to appear at [skills.sh/shps951023/MiniMarkdown](https://skills.sh/shps951023/MiniMarkdown). skills.sh hosts the skill catalog; the Node.js package itself remains sourced from this repository.
 
 ## Benchmarks
 

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Document Conversion",
+      "description": "Deterministic local document conversion workflows.",
+      "skills": ["minimarkdown-xlsx"]
+    }
+  ]
+}

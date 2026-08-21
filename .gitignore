@@ -2,6 +2,8 @@ csharp/**/bin/
 csharp/**/obj/
 csharp/benchmarks/artifacts/
 rust/target/
+node/node_modules/
+node/dist/
 artifacts/
 *.user
 *.suo

@@ -34,6 +34,9 @@ try {
     Invoke-Checked 'Test Rust (Release)' {
         cargo test --manifest-path rust/Cargo.toml --release
     }
+    Invoke-Checked 'Test Node.js and TypeScript' {
+        npm test --prefix node
+    }
     $installedWorkloads = dotnet workload list
     if ($installedWorkloads -match 'wasm-tools') {
         Invoke-Checked 'Build C# WebAssembly host' {
@@ -50,6 +53,14 @@ try {
     }
     else {
         Write-Warning 'Skipping Rust WebAssembly build because wasm32-unknown-unknown is not installed.'
+    }
+    if ((Get-Command npx -ErrorAction SilentlyContinue) -and ((node --version) -match '^v(2[2-9]|[3-9][0-9])\.')) {
+        Invoke-Checked 'Discover Agent Skills' {
+            npx --yes skills add . --list
+        }
+    }
+    else {
+        Write-Warning 'Skipping skills.sh discovery because Node.js 22 or newer is not installed.'
     }
 }
 finally {
