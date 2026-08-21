@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarkdown.Tests", "tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarkdown.Comparison", "tests\MiniMarkdown.Comparison\MiniMarkdown.Comparison.csproj", "{93D2FDE7-3B6A-4A25-B1FA-40986AC336DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarkdown.Benchmarks", "benchmarks\MiniMarkdown.Benchmarks\MiniMarkdown.Benchmarks.csproj", "{FD2822F0-6842-41D5-9CB9-FB28B4659CBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,5 +34,9 @@ Global
 		{93D2FDE7-3B6A-4A25-B1FA-40986AC336DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93D2FDE7-3B6A-4A25-B1FA-40986AC336DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93D2FDE7-3B6A-4A25-B1FA-40986AC336DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD2822F0-6842-41D5-9CB9-FB28B4659CBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD2822F0-6842-41D5-9CB9-FB28B4659CBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD2822F0-6842-41D5-9CB9-FB28B4659CBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD2822F0-6842-41D5-9CB9-FB28B4659CBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

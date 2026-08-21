@@ -1,4 +1,5 @@
 csharp/**/bin/
 csharp/**/obj/
+csharp/benchmarks/artifacts/
 *.user
 *.suo

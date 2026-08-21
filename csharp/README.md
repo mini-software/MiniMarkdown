@@ -43,6 +43,14 @@ dotnet run --project csharp/tests/MiniMarkdown.Tests
 dotnet run --project csharp/tests/MiniMarkdown.Comparison -- sample.xlsx
 ```
 
+Run the multi-case performance and semantic comparison benchmark with:
+
+```powershell
+.\scripts\Run-Benchmark.ps1
+```
+
+See [benchmarks/README.md](benchmarks/README.md) for cases, metrics, and reference-tool configuration.
+
 The comparison runner invokes `anydoc` and `markitdown` from `PATH`. Override their executable names with `ANYDOC_COMMAND` and `MARKITDOWN_COMMAND`. It reports semantic document shape rather than requiring byte-identical Markdown because the tools use different heading, date, empty-cell, and table policies. MiniMarkdown's exact-output tests are authoritative.
 
 ## Current scope

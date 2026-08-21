@@ -9,7 +9,14 @@
 - Keep caller-owned streams open. Use temporary files for non-seekable XLSX input when entries must be revisited.
 - Treat MiniMarkdown's deterministic Markdown output as the authoritative contract. Compare with anydoc and MarkItDown semantically, not byte-for-byte.
 - Add dependency-free integration tests for conversion behavior, malformed input, resource limits, and large worksheets.
-- Build and test before finishing changes:
+- Build and run integration tests before finishing changes:
   - `dotnet build csharp/MiniMarkdown.sln -c Release`
   - `dotnet run --project csharp/tests/MiniMarkdown.Tests -c Release`
+- For converter performance, memory, or output-shape changes, run the XLSX benchmark:
+  - Quick smoke test: `.\scripts\Run-Benchmark.ps1 -Tools minimarkdown -Iterations 1 -Warmups 0 -Filter basic`
+  - Full comparison: `.\scripts\Run-Benchmark.ps1`
+- Benchmark conversions must run in isolated processes. Compare median time, process-tree peak memory, output size, and semantic shape.
+- Use at least one warmup and three measured iterations for performance conclusions. A single iteration is only an integration check.
+- Treat anydoc and MarkItDown as references. Investigate semantic differences, but do not copy their lossy behavior or require byte-identical output.
+- Do not commit generated files under `csharp/benchmarks/artifacts/`.
 - Do not expand the supported file formats unless the task explicitly requests it. XLSX is the current priority.
