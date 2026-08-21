@@ -1,0 +1,18 @@
+[package]
+name = "minimarkdown"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[lib]
+name = "minimarkdown"
+path = "src/lib.rs"
+
+[[bin]]
+name = "minimarkdown"
+path = "src/main.rs"
+
+[dependencies]
+quick-xml = "0.38"
+tempfile = "3"
+zip = { version = "4", default-features = false, features = ["deflate"] }

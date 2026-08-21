@@ -16,6 +16,7 @@ namespace MiniMarkdown.Tests
             Run("Preserves caller-owned streams", PreservesInputStream);
             Run("Converts a non-seekable input stream", ConvertsNonSeekableInput);
             Run("Rejects packages over resource limits", RejectsPackageOverLimit);
+            Run("Rejects malformed packages", RejectsMalformedPackage);
             Run("Writes a large worksheet incrementally", WritesLargeWorksheetIncrementally);
             Console.WriteLine(failures == 0 ? "All tests passed." : failures + " test(s) failed.");
             return failures == 0 ? 0 : 1;
@@ -63,6 +64,17 @@ namespace MiniMarkdown.Tests
                 Throws<InvalidDataException>(delegate
                 {
                     new XlsxConverter().Convert(package, TextWriter.Null, new ConversionOptions { MaximumPackageBytes = 1 });
+                });
+            }
+        }
+
+        private static void RejectsMalformedPackage()
+        {
+            using (MemoryStream package = new MemoryStream(Encoding.UTF8.GetBytes("not an xlsx package")))
+            {
+                Throws<InvalidDataException>(delegate
+                {
+                    new XlsxConverter().Convert(package, TextWriter.Null);
                 });
             }
         }

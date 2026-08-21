@@ -1,6 +1,13 @@
 # MiniMarkdown Development Rules
 
-- Keep all C# projects and source files under `csharp/`.
+- Treat `ARCHITECTURE.md` as the authoritative cross-language architecture and behavior contract.
+- Keep language-specific projects and source files under their root language directory (`csharp/`, `rust/`, and future equivalents).
+- When shared behavior, output shape, CLI behavior, resource limits, security policy, or streaming architecture changes, update all maintained language implementations in the same change.
+- Update `ARCHITECTURE.md` whenever the shared contract or supported implementation set changes.
+- Add equivalent tests to every maintained language for shared behavior changes. Exact-output cases must produce byte-identical Markdown across languages.
+- Add every maintained language implementation to `scripts/Validate-All.ps1`; the repository-level validation gate must not omit an implementation.
+- Keep language-specific APIs idiomatic, but do not allow them to change observable conversion or CLI behavior defined by `ARCHITECTURE.md`.
+- Keep all C# projects and source files under `csharp/` and all Rust projects and source files under `rust/`.
 - Use English for code, comments, documentation, errors, and tests.
 - Do not add third-party libraries or NuGet package dependencies. Use .NET BCL APIs only.
 - Keep the library compatible with .NET Standard 2.0 and .NET Framework 4.6.2.
@@ -9,9 +16,7 @@
 - Keep caller-owned streams open. Use temporary files for non-seekable XLSX input when entries must be revisited.
 - Treat MiniMarkdown's deterministic Markdown output as the authoritative contract. Compare with anydoc and MarkItDown semantically, not byte-for-byte.
 - Add dependency-free integration tests for conversion behavior, malformed input, resource limits, and large worksheets.
-- Build and run integration tests before finishing changes:
-  - `dotnet build csharp/MiniMarkdown.sln -c Release`
-  - `dotnet run --project csharp/tests/MiniMarkdown.Tests -c Release`
+- Build and run every maintained implementation before finishing changes with `./scripts/Validate-All.ps1`.
 - For converter performance, memory, or output-shape changes, run the XLSX benchmark:
   - Quick smoke test: `.\scripts\Run-Benchmark.ps1 -Tools minimarkdown -Iterations 1 -Warmups 0 -Filter basic`
   - Full comparison: `.\scripts\Run-Benchmark.ps1`

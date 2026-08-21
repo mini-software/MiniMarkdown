@@ -1,5 +1,6 @@
 csharp/**/bin/
 csharp/**/obj/
 csharp/benchmarks/artifacts/
+rust/target/
 *.user
 *.suo
