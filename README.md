@@ -1,12 +1,12 @@
 # MiniMarkdown
 
-[![Validate](https://github.com/shps951023/MiniMarkdown/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/shps951023/MiniMarkdown/actions/workflows/deploy-pages.yml)
-[![GitHub Pages](https://img.shields.io/badge/try-GitHub%20Pages-171817)](https://shps951023.github.io/MiniMarkdown/)
+[![Validate](https://github.com/mini-software/MiniMarkdown/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/mini-software/MiniMarkdown/actions/workflows/deploy-pages.yml)
+[![GitHub Pages](https://img.shields.io/badge/try-GitHub%20Pages-171817)](https://mini-software.github.io/MiniMarkdown/)
 [![skills.sh](https://skills.sh/b/shps951023/MiniMarkdown)](https://skills.sh/shps951023/MiniMarkdown)
 
 MiniMarkdown converts XLSX workbooks into deterministic GitHub-Flavored Markdown. The repository maintains matching C#, Rust, and Node.js implementations with exact-output tests, bounded native conversion, command-line tools, and a browser comparison lab compiled to WebAssembly.
 
-**[Try the C# AOT and Rust WebAssembly converters in your browser](https://shps951023.github.io/MiniMarkdown/)**
+**[Try the C# AOT and Rust WebAssembly converters in your browser](https://mini-software.github.io/MiniMarkdown/)**
 
 Files selected in the browser stay on the device. The demo sends no workbook data to a server.
 
