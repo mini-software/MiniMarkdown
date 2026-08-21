@@ -25,8 +25,14 @@ try {
     Invoke-Checked 'Build C# (Release)' {
         dotnet build csharp/MiniMarkdown.sln -c Release
     }
-    Invoke-Checked 'Test C# integration behavior (Release)' {
-        dotnet run --project csharp/tests/MiniMarkdown.Tests -c Release --no-build
+    $runningOnWindows = [Environment]::OSVersion.Platform -eq [PlatformID]::Win32NT
+    if ($runningOnWindows -or (Get-Command mono -ErrorAction SilentlyContinue)) {
+        Invoke-Checked 'Test C# integration behavior (Release)' {
+            dotnet run --project csharp/tests/MiniMarkdown.Tests -c Release --no-build
+        }
+    }
+    else {
+        Write-Warning 'Skipping C# integration tests because Mono is not installed.'
     }
     Invoke-Checked 'Check Rust formatting' {
         cargo fmt --manifest-path rust/Cargo.toml -- --check
