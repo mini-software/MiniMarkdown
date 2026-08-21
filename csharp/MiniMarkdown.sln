@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarkdown", "src\MiniMarkdown\MiniMarkdown.csproj", "{EB5181FC-E0AD-4794-B444-83E641064388}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarkdown.Cli", "src\MiniMarkdown.Cli\MiniMarkdown.Cli.csproj", "{290A21E7-DBAA-4B51-BF6A-0301CFAE441C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarkdown.Tests", "tests\MiniMarkdown.Tests\MiniMarkdown.Tests.csproj", "{15FD2B30-1D41-46EE-80D8-F99226B1EE98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarkdown.Comparison", "tests\MiniMarkdown.Comparison\MiniMarkdown.Comparison.csproj", "{93D2FDE7-3B6A-4A25-B1FA-40986AC336DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB5181FC-E0AD-4794-B444-83E641064388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB5181FC-E0AD-4794-B444-83E641064388}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB5181FC-E0AD-4794-B444-83E641064388}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB5181FC-E0AD-4794-B444-83E641064388}.Release|Any CPU.Build.0 = Release|Any CPU
+		{290A21E7-DBAA-4B51-BF6A-0301CFAE441C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{290A21E7-DBAA-4B51-BF6A-0301CFAE441C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{290A21E7-DBAA-4B51-BF6A-0301CFAE441C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{290A21E7-DBAA-4B51-BF6A-0301CFAE441C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15FD2B30-1D41-46EE-80D8-F99226B1EE98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15FD2B30-1D41-46EE-80D8-F99226B1EE98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15FD2B30-1D41-46EE-80D8-F99226B1EE98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15FD2B30-1D41-46EE-80D8-F99226B1EE98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93D2FDE7-3B6A-4A25-B1FA-40986AC336DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93D2FDE7-3B6A-4A25-B1FA-40986AC336DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93D2FDE7-3B6A-4A25-B1FA-40986AC336DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93D2FDE7-3B6A-4A25-B1FA-40986AC336DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

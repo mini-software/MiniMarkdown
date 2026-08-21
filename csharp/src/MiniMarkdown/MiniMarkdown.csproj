@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>MiniMarkdown</RootNamespace>
+    <AssemblyName>MiniMarkdown.Core</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+  </ItemGroup>
+</Project>

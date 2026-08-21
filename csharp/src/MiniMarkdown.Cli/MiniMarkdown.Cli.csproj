@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net462</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>minimarkdown</AssemblyName>
+    <PackageId>MiniMarkdown.Cli</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MiniMarkdown\MiniMarkdown.csproj" />
+  </ItemGroup>
+</Project>

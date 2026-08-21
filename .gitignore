@@ -1,0 +1,4 @@
+csharp/**/bin/
+csharp/**/obj/
+*.user
+*.suo
