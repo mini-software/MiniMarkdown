@@ -5,11 +5,16 @@ mod worksheet;
 mod xml;
 
 use std::error::Error;
+#[cfg(not(target_arch = "wasm32"))]
 use std::fs::File;
 use std::io::{self, Read, Seek, Write};
+#[cfg(not(target_arch = "wasm32"))]
 use std::path::Path;
 
+#[cfg(not(target_arch = "wasm32"))]
 use tempfile::NamedTempFile;
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::prelude::*;
 use zip::ZipArchive;
 
 use shared_strings::SharedStringStore;
@@ -45,6 +50,7 @@ impl Default for ConversionOptions {
 pub struct XlsxConverter;
 
 impl XlsxConverter {
+    #[cfg(not(target_arch = "wasm32"))]
     pub fn convert<R: Read, W: Write>(
         input: &mut R,
         output: &mut W,
@@ -103,6 +109,7 @@ impl XlsxConverter {
         Ok(())
     }
 
+    #[cfg(not(target_arch = "wasm32"))]
     pub fn convert_file(
         input_path: impl AsRef<Path>,
         output_path: impl AsRef<Path>,
@@ -112,6 +119,27 @@ impl XlsxConverter {
         let mut output = io::BufWriter::new(File::create(output_path)?);
         Self::convert_seekable(&mut input, &mut output, options)
     }
+}
+
+#[cfg(target_arch = "wasm32")]
+#[wasm_bindgen]
+pub fn convert_xlsx(input: &[u8]) -> Result<String, JsValue> {
+    const MAXIMUM_BROWSER_PACKAGE_BYTES: usize = 16 * 1024 * 1024;
+    if input.len() > MAXIMUM_BROWSER_PACKAGE_BYTES {
+        return Err(JsValue::from_str(
+            "The browser demo accepts XLSX packages up to 16 MiB.",
+        ));
+    }
+
+    let mut input = io::Cursor::new(input);
+    let mut output = Vec::new();
+    let options = ConversionOptions {
+        maximum_package_bytes: MAXIMUM_BROWSER_PACKAGE_BYTES as u64,
+        ..ConversionOptions::default()
+    };
+    XlsxConverter::convert_seekable(&mut input, &mut output, &options)
+        .map_err(|error| JsValue::from_str(&error.to_string()))?;
+    String::from_utf8(output).map_err(|error| JsValue::from_str(&error.to_string()))
 }
 
 fn validate_archive<R: Read + Seek>(
@@ -161,6 +189,7 @@ fn validate_options(options: &ConversionOptions) -> ConversionResult<()> {
     Ok(())
 }
 
+#[cfg(not(target_arch = "wasm32"))]
 fn copy_with_limit<R: Read, W: Write>(
     input: &mut R,
     output: &mut W,

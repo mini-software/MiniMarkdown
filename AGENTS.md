@@ -6,6 +6,9 @@
 - Update `ARCHITECTURE.md` whenever the shared contract or supported implementation set changes.
 - Add equivalent tests to every maintained language for shared behavior changes. Exact-output cases must produce byte-identical Markdown across languages.
 - Add every maintained language implementation to `scripts/Validate-All.ps1`; the repository-level validation gate must not omit an implementation.
+- Keep the shared browser test surface under `web/`. Build it through `scripts/Build-Web.ps1`; do not duplicate its assembly logic in GitHub Actions.
+- Preserve both browser engines: C# must publish with .NET WebAssembly AOT, Rust must compile to WebAssembly, and compare mode must test byte-identical output.
+- For WebAssembly, browser UI, or Pages workflow changes, run `./scripts/Build-Web.ps1`. `-SkipAot` is only a local integration check; deployment must use AOT.
 - Keep language-specific APIs idiomatic, but do not allow them to change observable conversion or CLI behavior defined by `ARCHITECTURE.md`.
 - Keep all C# projects and source files under `csharp/` and all Rust projects and source files under `rust/`.
 - Use English for code, comments, documentation, errors, and tests.

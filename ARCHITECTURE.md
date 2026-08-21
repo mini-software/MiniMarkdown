@@ -6,7 +6,9 @@ This document is the repository-level contract for every MiniMarkdown implementa
 
 - `csharp/` contains the C# library, CLI, integration tests, and benchmarks.
 - `rust/` contains the Rust library, CLI, and integration tests.
+- `web/` contains the shared static browser interface.
 - `scripts/Validate-All.ps1` is the required cross-language validation entry point.
+- `scripts/Build-Web.ps1` builds the C# AOT and Rust WebAssembly GitHub Pages artifact.
 - `scripts/Run-Benchmark.ps1` runs the isolated XLSX performance and semantic benchmark.
 
 Each language directory owns its build metadata and implementation details. Shared policy belongs at the repository root.
@@ -50,6 +52,20 @@ Default limits MUST remain behaviorally equivalent across implementations:
 | ZIP entries | 10,000 |
 | Entry compression ratio | 1,000 |
 
+The browser demo is an intentionally constrained deployment surface. It accepts packages up to 16 MiB, processes files locally, and may use in-memory package and shared-string storage because browser WebAssembly has no portable temporary-file API. Native library and CLI implementations remain subject to the disk-backed bounded-memory contract.
+
+## WebAssembly contract
+
+The GitHub Pages test site MUST expose both maintained implementations:
+
+- C# is published with .NET WebAssembly AOT and exported through `JSExport`.
+- Rust is compiled to `wasm32-unknown-unknown` and packaged with `wasm-bindgen`/`wasm-pack`.
+- Both engines consume the same uploaded XLSX bytes and return the authoritative Markdown shape.
+- Compare mode reports whether outputs are byte-identical and allows either output to be inspected.
+- Workbook bytes MUST remain local to the browser. The static site MUST NOT upload workbook content.
+
+The Pages artifact is assembled only through `scripts/Build-Web.ps1`. GitHub Actions MUST call this script rather than duplicating build behavior in workflow YAML.
+
 ## CLI contract
 
 All CLIs MUST support:
@@ -80,6 +96,14 @@ The gate MUST build and test every maintained implementation. Each implementatio
 - A large worksheet with incremental output evidence.
 
 Changes to output shape, parsing, memory behavior, or performance MUST also run the XLSX benchmark. Performance conclusions require at least one warmup and three measured iterations; a single iteration is only a smoke test.
+
+Changes to `web/`, either WebAssembly export, or the site build pipeline MUST run:
+
+```powershell
+.\scripts\Build-Web.ps1
+```
+
+Use `-SkipAot` only for local integration checks. GitHub Pages deployment MUST use the default AOT build.
 
 ## Adding another language
 

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ef">
+  <meta name="description" content="Test MiniMarkdown's C# AOT and Rust WebAssembly XLSX converters in your browser.">
+  <title>MiniMarkdown Lab</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="https://github.com/shps951023/MiniMarkdown" aria-label="MiniMarkdown on GitHub">
+      <img src="favicon.svg" width="34" height="34" alt="">
+      <span>MiniMarkdown</span>
+    </a>
+    <div class="runtime-status" id="runtime-status" role="status">
+      <span class="status-light" aria-hidden="true"></span>
+      <span>Loading AOT engines</span>
+    </div>
+    <a class="repo-link" href="https://github.com/shps951023/MiniMarkdown">GitHub</a>
+  </header>
+
+  <main class="workspace">
+    <section class="control-band" aria-labelledby="workspace-title">
+      <div>
+        <p class="eyebrow">Browser conversion lab</p>
+        <h1 id="workspace-title">XLSX to exact Markdown</h1>
+      </div>
+      <div class="engine-picker" role="radiogroup" aria-label="Conversion engine">
+        <button class="engine-option" type="button" role="radio" aria-checked="true" data-engine="both">Compare both</button>
+        <button class="engine-option" type="button" role="radio" aria-checked="false" data-engine="csharp">C# AOT</button>
+        <button class="engine-option" type="button" role="radio" aria-checked="false" data-engine="rust">Rust WASM</button>
+      </div>
+    </section>
+
+    <section class="input-zone" id="drop-zone">
+      <input id="file-input" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+      <label for="file-input" class="file-label">
+        <span class="file-mark" aria-hidden="true">XLSX</span>
+        <span>
+          <strong id="file-title">Choose or drop a workbook</strong>
+          <small id="file-detail">Up to 16 MiB. Files stay in this browser.</small>
+        </span>
+      </label>
+      <button id="convert-button" class="primary-action" type="button" disabled>Convert</button>
+    </section>
+
+    <section class="result-zone" aria-live="polite">
+      <div class="result-toolbar">
+        <div class="result-state">
+          <strong id="result-title">No conversion yet</strong>
+          <span id="result-detail">Select an XLSX workbook to begin.</span>
+        </div>
+        <div class="output-tabs" id="output-tabs" hidden>
+          <button type="button" data-output="csharp" aria-selected="true">C#</button>
+          <button type="button" data-output="rust" aria-selected="false">Rust</button>
+        </div>
+        <div class="result-actions">
+          <button id="copy-button" type="button" disabled>Copy</button>
+          <button id="download-button" type="button" disabled>Download</button>
+        </div>
+      </div>
+      <textarea id="output" readonly spellcheck="false" aria-label="Generated Markdown" placeholder="Generated Markdown appears here."></textarea>
+    </section>
+  </main>
+
+  <footer>
+    <span>Deterministic output. Local execution. No upload.</span>
+    <span id="build-label">C# AOT + Rust WebAssembly</span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

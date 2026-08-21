@@ -1,0 +1,65 @@
+name: Deploy WebAssembly demo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Set up Rust WebAssembly target
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Install WebAssembly build tools
+        shell: pwsh
+        run: |
+          dotnet workload install wasm-tools
+          cargo install wasm-pack --locked
+
+      - name: Validate native implementations
+        shell: pwsh
+        run: ./scripts/Validate-All.ps1
+
+      - name: Build AOT WebAssembly site
+        shell: pwsh
+        run: ./scripts/Build-Web.ps1
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: artifacts/site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

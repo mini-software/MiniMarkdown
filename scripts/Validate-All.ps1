@@ -34,6 +34,23 @@ try {
     Invoke-Checked 'Test Rust (Release)' {
         cargo test --manifest-path rust/Cargo.toml --release
     }
+    $installedWorkloads = dotnet workload list
+    if ($installedWorkloads -match 'wasm-tools') {
+        Invoke-Checked 'Build C# WebAssembly host' {
+            dotnet build csharp/src/MiniMarkdown.WebAssembly/MiniMarkdown.WebAssembly.csproj -c Release -p:RunAOTCompilation=false
+        }
+    }
+    else {
+        Write-Warning 'Skipping the C# WebAssembly build because wasm-tools is not installed.'
+    }
+    if ((rustup target list --installed) -contains 'wasm32-unknown-unknown') {
+        Invoke-Checked 'Build Rust WebAssembly library' {
+            cargo build --manifest-path rust/Cargo.toml --lib --release --target wasm32-unknown-unknown
+        }
+    }
+    else {
+        Write-Warning 'Skipping Rust WebAssembly build because wasm32-unknown-unknown is not installed.'
+    }
 }
 finally {
     Pop-Location
